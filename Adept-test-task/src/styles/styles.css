@@ -1,0 +1,343 @@
+@charset "UTF-8";
+/* Нормализация шрифтов */
+/**
+  Нормализация блочной модели
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/**
+    Убираем внутренние отступы слева тегам списков,
+    у которых есть атрибут class
+   */
+:where(ul, ol):where([class]) {
+  padding-left: 0;
+}
+
+/**
+    Убираем внешние отступы body и двум другим тегам,
+    у которых есть атрибут class
+   */
+body,
+:where(blockquote, figure):where([class]) {
+  margin: 0;
+}
+
+/**
+    Убираем внешние отступы вертикали нужным тегам,
+    у которых есть атрибут class
+   */
+:where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl):where([class]) {
+  margin-block: 0;
+}
+
+:where(dd[class]) {
+  margin-left: 0;
+}
+
+:where(fieldset[class]) {
+  margin-left: 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+    Убираем стандартный маркер маркированному списку,
+    у которого есть атрибут class
+   */
+:where(ul[class]) {
+  list-style: none;
+}
+
+/**
+    Обнуляем вертикальные внешние отступы параграфа,
+    объявляем локальную переменную для внешнего отступа вниз,
+    чтобы избежать взаимодействие с более сложным селектором
+   */
+p {
+  --paragraphMarginBottom: 24px;
+  margin-block: 0;
+}
+
+/**
+    Внешний отступ вниз для параграфа без атрибута class,
+    который расположен не последним среди своих соседних элементов
+   */
+p:where(:not([class]):not(:last-child)) {
+  margin-bottom: var(--paragraphMarginBottom);
+}
+
+/**
+    Упрощаем работу с изображениями
+   */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/**
+    Наследуем свойства шрифт для полей ввода
+   */
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+html {
+  /**
+      Пригодится в большинстве ситуаций
+      (когда, например, нужно будет "прижать" футер к низу сайта)
+     */
+  height: 100%;
+  /**
+      Плавный скролл
+     */
+  scroll-behavior: smooth;
+}
+
+body {
+  /**
+      Пригодится в большинстве ситуаций
+      (когда, например, нужно будет "прижать" футер к низу сайта)
+     */
+  min-height: 100%;
+  /**
+      Унифицированный интерлиньяж
+     */
+  line-height: 1.5;
+}
+
+/**
+    Приводим к единому цвету svg-элементы
+   */
+svg *[fill] {
+  fill: currentColor;
+}
+
+svg *[stroke] {
+  stroke: currentColor;
+}
+
+/**
+    Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+   */
+svg * {
+  transition-property: fill, stroke;
+}
+
+/**
+    Удаляем все анимации и переходы для людей,
+    которые предпочитают их не использовать
+   */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+.container {
+  max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+  padding-inline: var(--container-padding-x);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section-padding-y);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  border: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  clip-path: inset(100%) !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+
+@layer base {
+  @font-face {
+    font-display: swap;
+    font-family: 'Extatica';
+    src: url('./fonts/Extatica-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 400;
+  }
+  @font-face {
+    font-display: swap;
+    font-family: 'Extatica';
+    src: url('./fonts/Extatica-Medium.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 500;
+  }
+  @font-face {
+    font-display: swap;
+    font-family: 'Extatica';
+    src: url('./fonts/Extatica-SemiBold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 600;
+  }
+  @font-face {
+    font-display: swap;
+    font-family: 'Evolventa';
+    src: url('./fonts/Evolventa-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 400;
+  }
+  @font-face {
+    font-display: swap;
+    font-family: 'Evolventa';
+    src: url('./fonts/Evolventa-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 700;
+  }
+  html {
+    @apply font-ex font-medium bg-white text-black;
+  }
+  body {
+    @apply bg-milk;
+    font-family: var(--font-family-base);
+    color: var(--color-dark);
+    height: 100vh;
+    background: #bebaba;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  h1 {
+    @apply font-ex font-normal text-8xl lg:text-10xl xl:text-12xl tracking-normal;
+  }
+  h2 {
+    @apply font-ex font-normal text-11xl tracking-normal;
+  }
+  h3 {
+    @apply font-ex font-normal text-10xl tracking-normal uppercase;
+  }
+  h4 {
+    @apply font-ex font-medium text-lg xs:text-xl md:text-2xl lg:text-3xl xl:text-5xl 2xl:text-7xl 3xl:text-9xl tracking-normal uppercase;
+  }
+  h5 {
+    @apply font-ex font-medium text-base xs:text-lg md:text-xl lg:text-2xl xl:text-4xl 2xl:text-6xl 3xl:text-8xl tracking-normal uppercase;
+  }
+  h6 {
+    @apply font-ex font-medium text-xl md:text-2xl lg:text-3xl xl:text-5xl 3xl:text-7xl tracking-normal uppercase;
+  }
+  ul,
+  ol {
+    list-style: revert;
+  }
+}
+@layer components {
+  .t1 {
+    @apply font-ex font-medium text-base lg:text-xl xl:text-2xl 2xl:text-6xl tracking-normal uppercase;
+  }
+  .t1-lowercase {
+    @apply font-ex font-medium text-base lg:text-xl xl:text-2xl 2xl:text-6xl tracking-normal;
+  }
+  .t2 {
+    @apply font-ex font-medium text-base lg:text-2xl 2xl:text-2xl 3xl:text-5xl tracking-normal uppercase;
+  }
+  .t3 {
+    @apply font-ex font-semibold text-xl md:text-2xl xl:text-4xl tracking-normal;
+  }
+  /*font-weight: 600 (semibold)*/
+  .t4 {
+    @apply font-ex font-semibold text-xl lg:text-2xl 3xl:text-3xl tracking-normal uppercase;
+  }
+  /*font-weight: 500 (medium)*/
+  .t4-medium {
+    @apply font-ex font-medium text-3xl tracking-normal uppercase;
+  }
+  .t5 {
+    @apply font-ex font-medium text-sm sm:text-base 2xl:text-lg 3xl:text-2xl tracking-normal uppercase;
+  }
+  /*font-weight: 600 (semibold)*/
+  .t6 {
+    @apply font-ex font-semibold text-sm xl:text-xl tracking-normal;
+  }
+  /*font-weight: 500 (medium)*/
+  .t6-medium {
+    @apply font-ex font-medium text-base xl:text-base 2xl:text-xl tracking-normal;
+  }
+  /*font-weight: 400 (normal)*/
+  .t6-normal {
+    @apply font-ex font-normal text-xl tracking-normal;
+  }
+  .t7 {
+    @apply font-ev font-normal text-xxs xs:text-xs lg:text-sm 3xl:text-lg tracking-normal;
+  }
+  .t8 {
+    @apply font-ev font-normal text-xs md:text-sm 3xl:text-md tracking-normal;
+  }
+  .t9 {
+    @apply font-ev font-medium text-2xxs lg:text-sm 3xl:text-base tracking-normal;
+  }
+  .t10 {
+    @apply font-ev font-normal text-xxs sm:text-xs lg:text-sm tracking-normal;
+  }
+  .t10-min {
+    @apply font-ev font-normal text-2xxs sm:text-xxs lg:text-sm tracking-normal;
+  }
+  /* font-weight: 700 (bold)
+     font-family: Evolventa */
+  .t11-bold {
+    @apply font-ev font-bold text-xs tracking-normal;
+  }
+  /* font-weight: 500 (medium)
+     font-family: Extatica */
+  .t11 {
+    @apply font-ex font-medium text-xxs lg:text-xs tracking-normal;
+  }
+  .t12 {
+    @apply font-ev font-normal text-xxs tracking-normal;
+  }
+  /* font-weight: 500 (medium)
+     font-family: Extatica */
+  .t13-medium {
+    @apply font-ex font-medium text-2xxs tracking-normal;
+  }
+  /*font-weight: 400 (normal)
+   font-family: Evolventa */
+  .t13 {
+    @apply font-ev font-normal text-2xxs tracking-normal;
+  }
+  .title-gutter {
+    @apply mb-6 3xl:mb-16;
+  }
+  .section-gutter {
+    @apply my-10 xl:my-12 3xl:my-24;
+  }
+  .section-gutter__custom {
+    @apply my-6;
+  }
+  .first-block-gutter {
+    @apply mt-20 2xl:mt-28;
+  }
+}
+p {
+  margin-bottom: 0 !important; /* Use !important to ensure it overrides previous styles */
+}
+
+:root {
+  --paragraphMarginBottom: 0;
+  --color-dark: #040306;
+  --color-light: #ffffff;
+  --input-height: 55px;
+  --border-radius: 10px;
+  --section-padding-y: 20px;
+  --body-with-container: 1200px;
+  --container-width: 1900px;
+  --font-family-base: 'Evolventa', sans-serif;
+  --container-padding-x: 20px;
+} /*# sourceMappingURL=styles.css.map */

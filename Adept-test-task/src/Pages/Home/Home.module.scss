@@ -1,0 +1,109 @@
+.tableContainer {
+  border-radius: 8px;
+  overflow-x: auto;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.table thead {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.headerCell,
+.cell {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Увеличиваем ширину колонки с задачами */
+.headerCell.tasksColumn,
+.cell.tasksColumn {
+  width: 60%;
+}
+
+.headerCell,
+.cell {
+  width: 20%;
+}
+
+.dateBox {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.overdue {
+  background-color: #ffcccc; // Красный для просроченных задач
+}
+
+.upcoming {
+  background-color: #ccffcc; // Зеленый для будущих задач
+}
+
+.gray {
+  background-color: #e0e0e0; // Серый для выполненных задач
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+.actionButton {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px; /* Закругленные края для всех кнопок */
+}
+
+.completeButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.actionButton:disabled {
+  background-color: gray;
+}
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
